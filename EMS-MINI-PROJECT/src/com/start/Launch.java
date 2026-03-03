@@ -1,11 +1,15 @@
 package com.start;
 
+import com.controller.MyController;
+import com.dto.EmployeeDTO;
+
 import java.util.Scanner;
 
 public class Launch {
 
     void main(){
 
+        //CLIENT SIDE (CONSOLE BASED)
         //CREATE A MENU
         /*
         * ****** WELCOME TO EMPLOYEE MANAGEMENT SYSTEM ******
@@ -24,7 +28,11 @@ public class Launch {
         IO.println("\n(:****** WELCOME TO EMPLOYEE MANAGEMENT SYSTEM ******:)");
         IO.println("-------------------------------------------------------\n");
 
+        //CREATE OBJECT
+        MyController controller = new MyController();
+
         Scanner sc = new Scanner(System.in);
+
 
         while (true){
             IO.println("Press-1 : Add Employee");
@@ -44,6 +52,24 @@ public class Launch {
             switch (choice){
                 case 1:
                     IO.println("Add Employee\n");
+
+                    IO.println("ENTER EID");
+                    int eid = sc.nextInt();
+
+                    IO.println("ENTER EAGE");
+                    int eage = sc.nextInt();
+
+                    IO.println("ENTER EPINCODE");
+                    int epincode = sc.nextInt();
+
+                    EmployeeDTO edto = new EmployeeDTO(eid, eage, epincode);
+                    int res = controller.addEmployee(edto);
+                    if (res == 100){
+                        IO.println("Data Inserted Successfully!\n");
+                    }else{
+                        IO.println("Data Inserted Failed!\n");
+                    }
+
                     break;
                 case 2:
                     IO.println("Read All Employee\n");
