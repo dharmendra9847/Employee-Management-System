@@ -3,6 +3,8 @@ package com.start;
 import com.controller.MyController;
 import com.dto.EmployeeDTO;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 public class Launch {
@@ -35,7 +37,7 @@ public class Launch {
 
 
         while (true){
-            IO.println("Press-1 : Add Employee");
+            IO.println("\nPress-1 : Add Employee");
             IO.println("Press-2 : Read All Employee");
             IO.println("Press-3 : Delete Single Employee");
             IO.println("Press-4 : Update Single Employee");
@@ -63,22 +65,52 @@ public class Launch {
                     int epincode = sc.nextInt();
 
                     EmployeeDTO edto = new EmployeeDTO(eid, eage, epincode);
-                    int res = controller.addEmployee(edto);
-                    if (res == 100){
+                    List list = controller.addEmployee(edto);
+                    if (list.isEmpty()){
                         IO.println("Data Inserted Successfully!\n");
                     }else{
-                        IO.println("Data Inserted Failed!\n");
+                        Iterator iterator = list.iterator();
+                        while (iterator.hasNext()){
+                            IO.println(iterator.next());
+                        }
                     }
-
                     break;
                 case 2:
                     IO.println("Read All Employee\n");
+                    list = controller.readAllEmployee();
+                    Iterator iterator = list.iterator();
+                    if (list.isEmpty()){
+                        IO.println("Data Not Found!\n");
+                    }else {
+                        while (iterator.hasNext()){
+                            //IO.println(iterator.next()); //Object Print
+                            EmployeeDTO  emp= (EmployeeDTO) iterator.next();
+                            IO.println("ID : " + emp.getEid());
+                            IO.println("AGE : " + emp.getEage());
+                            IO.println("PINCODE : " + emp.getEpicode());
+                        }
+                    }
                     break;
                 case 3:
                     IO.println("Delete Single Employee\n");
+                    IO.println("ENTER EID");
+                    eid = sc.nextInt();
+
+                    String res = controller.removeSingleEmployee(eid);
+                    IO.println("ID : " + res);
+
                     break;
                 case 4:
                     IO.println("Update Single Employee\n");
+
+                    IO.println("ENTER EID");
+                    eid = sc.nextInt();
+
+                    IO.println("ENTER NEW EAGE");
+                    eage = sc.nextInt();
+
+                    res = controller.updateSingleData(eid, eage);
+                    IO.println("ID : " + res);
                     break;
                 case 5:
                     IO.println("Exit");

@@ -2,27 +2,33 @@ package com.controller;
 
 import com.dto.EmployeeDTO;
 import com.service.EmployeeService;
+import com.service.EmployeeServiceImpl;
+
+import java.util.List;
 
 public class MyController {
 
-    private EmployeeService employeeService; //null by default
+    private EmployeeService employeeService;
 
     public MyController(){
-        employeeService = new EmployeeService();
+        employeeService = new EmployeeServiceImpl();
     }
 
-    public int addEmployee(EmployeeDTO edto){
+    public List addEmployee(EmployeeDTO edto){
 
-        //SERVICE CALL
-//        EmployeeService eservice = new EmployeeService();
-//        eservice.addEmployee(edto);
-        int res = employeeService.addEmployee(edto);
-        return res;
-
+        List list = employeeService.addEmployee(edto);
+        return list;
     }
 
-//    public void test(){
-//
-//        //SERVICE CALL
-//    }
+    public List readAllEmployee(){
+        return employeeService.readAllEmployee();
+    }
+
+    public String removeSingleEmployee(int id){
+        return employeeService.removeSingleEmployee(id);
+    }
+
+    public String updateSingleData(int eid, int eage) {
+        return employeeService.updateSingleData(eid, eage);
+    }
 }
